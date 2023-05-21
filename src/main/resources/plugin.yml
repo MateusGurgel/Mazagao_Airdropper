@@ -1,0 +1,6 @@
+name: Mazagao_AirDropper
+version: '${project.version}'
+main: me.waskjobe.mazagao_airdropper.Mazagao_AirDropper
+api-version: 1.19
+authors: [Waskjobe]
+description: The plugin that makes loot fall from the sky!
