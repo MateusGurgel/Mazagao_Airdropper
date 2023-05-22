@@ -1,14 +1,9 @@
-package me.waskjobe.mazagao_airdropper;
+package me.waskjobe.mazagao_airdropper.TaskScheduler;
 
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 import org.bukkit.Server;
-
-@FunctionalInterface
-interface VoidFunction {
-    void execute();
-}
 
 public class TaskScheduler implements TaskSchedulerInterface {
     private final Plugin plugin;

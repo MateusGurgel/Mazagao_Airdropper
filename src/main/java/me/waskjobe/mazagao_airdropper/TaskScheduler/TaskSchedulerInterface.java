@@ -1,4 +1,4 @@
-package me.waskjobe.mazagao_airdropper;
+package me.waskjobe.mazagao_airdropper.TaskScheduler;
 import org.bukkit.scheduler.BukkitTask;
 
 @FunctionalInterface

@@ -1,2 +1,6 @@
-package me.waskjobe.mazagao_airdropper.TaskScheduler;public interface VoidFunction {
+package me.waskjobe.mazagao_airdropper.TaskScheduler;
+
+@FunctionalInterface
+public interface VoidFunction {
+    void execute();
 }
