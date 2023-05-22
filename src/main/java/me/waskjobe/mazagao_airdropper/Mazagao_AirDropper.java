@@ -1,5 +1,6 @@
 package me.waskjobe.mazagao_airdropper;
 
+import me.waskjobe.mazagao_airdropper.Airdrop.Airdrop;
 import me.waskjobe.mazagao_airdropper.TaskScheduler.TaskScheduler;
 import me.waskjobe.mazagao_airdropper.TaskScheduler.TaskSchedulerInterface;
 import me.waskjobe.mazagao_airdropper.TaskScheduler.VoidFunction;
@@ -31,12 +32,11 @@ public final class Mazagao_AirDropper extends JavaPlugin {
         //Scheduling Tasks
         System.out.println("Scheduling Tasks");
 
-        VoidFunction airdropLogic = () -> {
-            Airdrop.call(overworld);
-        };
-
         TaskSchedulerInterface taskScheduler = new TaskScheduler(this, getServer());
-        airdropTask = taskScheduler.scheduleTask(airdropPeriod, airdropPeriod, airdropLogic);
+
+        airdropTask = taskScheduler.scheduleTask(airdropPeriod, airdropPeriod, () -> {
+            Airdrop.task(overworld);
+        });
 
         System.out.println("Mazagão Dropper is enabled");
     }

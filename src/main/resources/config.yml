@@ -1,7 +1,39 @@
 settings:
+  min_amount_of_players: 3
+  airdrop_chance: 75
+  airdrop_message: "Um Airdrop Caiu na localização"
+  airdrop_period: 24000
+  airdrop_range: 400
   airdrop_base_location:
     x: 0
     z: 0
-  airdrop_period: 24000
-  airdrop_range: 400
+  drops:
+    common_items_amount: 10
+    common_items_chance: 100
+    rare_items_amount: 10
+    rare_items_chance: 100
+    epic_items_amount: 10
+    epic_items_chance: 100
+    legendary_items_amount: 10
+    legendary_items_chance: 100
 
+
+    common:
+      item1:
+        material: DIAMOND_SWORD
+        amount: 1
+
+    rare:
+      item1:
+        material: BOW
+        amount: 1
+
+    epic:
+      item1:
+        material: BOW
+        amount: 1
+
+    legendary:
+      item1:
+        material: REDSTONE
+        amount: 1
