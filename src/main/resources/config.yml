@@ -2,6 +2,6 @@ settings:
   airdrop_base_location:
     x: 0
     z: 0
-  airdrop_period: 20000
+  airdrop_period: 24000
   airdrop_range: 400
 

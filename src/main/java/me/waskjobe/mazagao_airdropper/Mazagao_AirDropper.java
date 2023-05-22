@@ -3,6 +3,9 @@ package me.waskjobe.mazagao_airdropper;
 import me.waskjobe.mazagao_airdropper.TaskScheduler.TaskScheduler;
 import me.waskjobe.mazagao_airdropper.TaskScheduler.TaskSchedulerInterface;
 import me.waskjobe.mazagao_airdropper.TaskScheduler.VoidFunction;
+import org.bukkit.Bukkit;
+import org.bukkit.World;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitTask;
 
@@ -12,19 +15,28 @@ public final class Mazagao_AirDropper extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        // Plugin startup logic
 
-        System.out.println("Initializing...");
+        //Plugin startup logic
+        System.out.println("Setuping");
 
-        System.out.println("Scheduling Tasks...");
+        ConfigManager configManager = ConfigManager.getInstance();
+        configManager.setup(this);
+        //Getting OverWorld
+        World overworld = Bukkit.getWorld("world");
+
+        //getting airdrop period
+        FileConfiguration config = configManager.getConfig();
+        int airdropPeriod = config.getInt("settings.airdrop_period");
+
+        //Scheduling Tasks
+        System.out.println("Scheduling Tasks");
 
         VoidFunction airdropLogic = () -> {
-            System.out.println("Teste");
+            Airdrop.call(overworld);
         };
 
         TaskSchedulerInterface taskScheduler = new TaskScheduler(this, getServer());
-
-        airdropTask = taskScheduler.scheduleTask(0, 24000, airdropLogic);
+        airdropTask = taskScheduler.scheduleTask(airdropPeriod, airdropPeriod, airdropLogic);
 
         System.out.println("Mazagão Dropper is enabled");
     }
