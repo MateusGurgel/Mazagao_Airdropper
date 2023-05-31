@@ -1,8 +1,5 @@
 package me.waskjobe.mazagao_airdropper.Airdrop;
 import me.waskjobe.mazagao_airdropper.ConfigManager;
-import me.waskjobe.mazagao_airdropper.GodlyItems.Bomber;
-import me.waskjobe.mazagao_airdropper.GodlyItems.Chamoy;
-import me.waskjobe.mazagao_airdropper.GodlyItems.PenetrationBomber;
 import me.waskjobe.mazagao_airdropper.ProbabilityUtils;
 import org.bukkit.*;
 import org.bukkit.block.Block;
@@ -14,7 +11,7 @@ import org.bukkit.plugin.Plugin;
 
 public class Airdrop {
 
-    private static FileConfiguration config = ConfigManager.getInstance().getConfig();
+    private static final FileConfiguration config = ConfigManager.getInstance().getConfig();
 
     private static Location generateAirDropLocation(World world){
         Location location = new Location(world, 0, 0, 0);

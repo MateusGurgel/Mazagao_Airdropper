@@ -2,8 +2,6 @@ package me.waskjobe.mazagao_airdropper.GodlyItems;
 
 import org.bukkit.Location;
 import org.bukkit.World;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.minecart.ExplosiveMinecart;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;

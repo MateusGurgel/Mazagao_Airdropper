@@ -19,10 +19,6 @@ public class ProbabilityUtils {
     public static boolean getProbability(int chance) {
         int number = getRandomInt(1, 100);
 
-        if (number <= chance) {
-            return true; // The probability occurred
-        }
-
-        return false; // The probability did not occur
+        return number <= chance;
     }
 }
