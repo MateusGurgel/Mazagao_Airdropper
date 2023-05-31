@@ -2,38 +2,253 @@ settings:
   min_amount_of_players: 3
   airdrop_chance: 75
   airdrop_message: "Um Airdrop Caiu na localização"
-  airdrop_period: 24000
-  airdrop_range: 400
+  airdrop_period: 72000
+  airdrop_range: 1
   airdrop_base_location:
     x: 0
     z: 0
   drops:
-    common_items_amount: 10
-    common_items_chance: 100
-    rare_items_amount: 10
-    rare_items_chance: 100
-    epic_items_amount: 10
-    epic_items_chance: 100
-    legendary_items_amount: 10
+    common_items_amount: 15
+    common_items_chance: 95
+    rare_items_amount: 8
+    rare_items_chance: 50
+    epic_items_amount: 2
+    epic_items_chance: 10
+    legendary_items_amount: 1
     legendary_items_chance: 100
-
-
+    godly_items_amount: 1
+    godly_items_chance: 100
     common:
       item1:
-        material: DIAMOND_SWORD
+        material: OAK_WOOD
+        amount: 5
+      item2:
+        material: BREAD
+        amount: 10
+      item3:
+        material: APPLE
+        amount: 5
+      item4:
+        material: IRON_INGOT
+        amount: 5
+      item5:
+        material: GOLD_INGOT
+        amount: 3
+      item6:
+        material: WHEAT
+        amount: 5
+      item7:
+        material: WHEAT_SEEDS
+        amount: 3
+      item8:
+        material: IRON_SWORD
         amount: 1
-
+      item9:
+        material: IRON_PICKAXE
+        amount: 1
+      item10:
+        material: IRON_AXE
+        amount: 1
+      item11:
+        material: IRON_SHOVEL
+        amount: 1
+      item12:
+        material: IRON_HOE
+        amount: 1
+      item13:
+        material: IRON_HELMET
+        amount: 1
+      item14:
+        material: IRON_CHESTPLATE
+        amount: 1
+      item15:
+        material: IRON_LEGGINGS
+        amount: 1
+      item16:
+        material: IRON_BOOTS
+        amount: 1
+      item17:
+        material: IRON_INGOT
+        amount: 5
+      item18:
+        material: TORCH
+        amount: 16
+      item19:
+        material: REDSTONE
+        amount: 16
+      item20:
+        material: FLINT
+        amount: 6
+      item21:
+        material: GRAVEL
+        amount: 20
+      item22:
+        material: FLINT_AND_STEEL
+        amount: 1
+      item23:
+        material: BOW
+        amount: 1
+      item24:
+        material: ARROW
+        amount: 32
+      item25:
+        material: GOLDEN_HELMET
+        amount: 1
+      item26:
+        material: GOLDEN_PICKAXE
+        amount: 1
+      item27:
+        material: IRON_BLOCK
+        amount: 6
+      item28:
+        material: TNT
+        amount: 32
+      item29:
+        material: REDSTONE_BLOCK
+        amount: 16
+      item30:
+        material: REPEATER
+        amount: 32
+      item31:
+        material: SCULK_SENSOR
+        amount: 8
+      item32:
+        material: ANVIL
+        amount: 1
+      item33:
+        material: FROSTED_ICE
+        amount: 64
     rare:
       item1:
-        material: BOW
+        material: OBSIDIAN
+        amount: 45
+      item2:
+        material: CROSSBOW
         amount: 1
-
+      item3:
+        material: EXPERIENCE_BOTTLE
+        amount: 38
+      item4:
+        material: DIAMOND
+        amount: 7
+      item5:
+        material: DIAMOND_SWORD
+        amount: 1
+      item6:
+        material: DIAMOND_PICKAXE
+        amount: 1
+      item7:
+        material: DIAMOND_AXE
+        amount: 1
+      item8:
+        material: DIAMOND_SHOVEL
+        amount: 1
+      item9:
+        material: DIAMOND_HOE
+        amount: 1
+      item10:
+        material: DIAMOND_HELMET
+        amount: 1
+      item11:
+        material: DIAMOND_CHESTPLATE
+        amount: 1
+      item12:
+        material: DIAMOND_LEGGINGS
+        amount: 1
+      item13:
+        material: DIAMOND_BOOTS
+        amount: 1
+      item14:
+        material: GOLDEN_APPLE
+        amount: 6
+      item15:
+        material: ENDER_PEARL
+        amount: 8
+      item16:
+        material: NETHERITE_SCRAP
+        amount: 5
+      item17:
+        material: ENCHANTING_TABLE
+        amount: 1
     epic:
       item1:
-        material: BOW
+        material: TOTEM_OF_UNDYING
         amount: 1
-
+      item2:
+        material: DIAMOND_BLOCK
+        amount: 2
+      item4:
+        material: REDSTONE_BLOCK
+        amount: 4
+      item5:
+        material: ENDER_CHEST
+        amount: 1
+      item6:
+        material: NETHERITE_INGOT
+        amount: 1
+      item7:
+        material: ENDER_PEARL
+        amount: 6
+      item8:
+        material: ENDER_EYE
+        amount: 3
+      item9:
+        material: EXPERIENCE_BOTTLE
+        amount: 75
+      item10:
+        material: BEACON
+        amount: 1
+      item11:
+        material: NETHERITE_SWORD
+        amount: 1
+      item12:
+        material: NETHERITE_PICKAXE
+        amount: 1
+      item13:
+        material: NETHERITE_AXE
+        amount: 1
+      item14:
+        material: NETHERITE_SHOVEL
+        amount: 1
+      item15:
+        material: NETHERITE_HOE
+        amount: 1
+      item16:
+        material: NETHERITE_HELMET
+        amount: 1
+      item17:
+        material: NETHERITE_CHESTPLATE
+        amount: 1
+      item18:
+        material: NETHERITE_LEGGINGS
+        amount: 1
+      item19:
+        material: NETHERITE_BOOTS
+        amount: 1
+      item20:
+        material: SHULKER_BOX
+        amount: 1
+      item21:
+        material: ENCHANTED_GOLDEN_APPLE
+        amount: 1
     legendary:
-      item1:
-        material: REDSTONE
+      Suor_Do_Alessandro_potion:
+        material: SPLASH_POTION
         amount: 1
+        meta:
+          enchantments:
+            - "power:10"
+          lore:
+            - "Suor de alessandro retirado diretamente de sua cadeira gamer"
+          potionEffects:
+            - "CONFUSION:999999:100"
+      Alessandro_potion:
+        material: SPLASH_POTION
+        amount: 5
+        meta:
+          enchantments:
+            - "power:10"
+          lore:
+            - "Liquido do Alessandro"
+          potionEffects:
+            - "HARM:1:1"

@@ -1,5 +1,8 @@
 package me.waskjobe.mazagao_airdropper.Airdrop;
 import me.waskjobe.mazagao_airdropper.ConfigManager;
+import me.waskjobe.mazagao_airdropper.GodlyItems.Bomber;
+import me.waskjobe.mazagao_airdropper.GodlyItems.Chamoy;
+import me.waskjobe.mazagao_airdropper.GodlyItems.PenetrationBomber;
 import me.waskjobe.mazagao_airdropper.ProbabilityUtils;
 import org.bukkit.*;
 import org.bukkit.block.Block;
@@ -7,7 +10,7 @@ import org.bukkit.block.BlockState;
 import org.bukkit.block.Chest;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.inventory.Inventory;
-import org.bukkit.scheduler.BukkitTask;
+import org.bukkit.plugin.Plugin;
 
 public class Airdrop {
 
@@ -34,23 +37,19 @@ public class Airdrop {
         return location;
     }
 
-    public static void task(World world){
-
-        System.out.println("Tentando");
-
+    public static void task(World world, Plugin plugin){
         int airdropChance = config.getInt("settings.airdrop_chance");
         int minAmountOfPlayers = config.getInt("settings.min_amount_of_players");
         int connectedPlayers = Bukkit.getOnlinePlayers().size();
 
         if (!ProbabilityUtils.getProbability(airdropChance) || connectedPlayers < minAmountOfPlayers){
-            System.out.println("Brabo");
             return;
         }
 
-        call(world);
+        call(world, plugin);
     }
 
-    public static void call(World world){
+    public static void call(World world, Plugin plugin){
 
         //Get Location
         Location location = generateAirDropLocation(world);
@@ -68,7 +67,7 @@ public class Airdrop {
         Inventory ChestInventory = chest.getInventory();
 
         //place the loot on the Chest
-        Inventory loot = LootManager.generateAirdropChestLoot();
+        Inventory loot = LootManager.generateAirdropChestLoot(plugin);
         ChestInventory.setContents(loot.getContents());
 
         //Send Message

@@ -1,14 +1,25 @@
 package me.waskjobe.mazagao_airdropper.Airdrop;
 
 import me.waskjobe.mazagao_airdropper.ConfigManager;
+import me.waskjobe.mazagao_airdropper.GodlyItems.Bomber;
+import me.waskjobe.mazagao_airdropper.GodlyItems.Chamoy;
+import me.waskjobe.mazagao_airdropper.GodlyItems.PenetrationBomber;
 import me.waskjobe.mazagao_airdropper.ProbabilityUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.Item;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.PotionMeta;
+import org.bukkit.plugin.Plugin;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,11 +47,51 @@ public class LootManager {
             }
 
             // Create the ItemStack using the material name and amount
-            Material material = Material.getMaterial(materialName);
+            Material material = Material.matchMaterial(materialName);
             if (material == null) {
                 throw new IllegalArgumentException("Invalid material: " + materialName);
             }
             ItemStack itemStack = new ItemStack(material, amount);
+
+            // Set item metadata (e.g., enchantments, lore, potion effects)
+            ConfigurationSection metaSection = config.getConfigurationSection(itemPath + ".meta");
+            if (metaSection != null) {
+                ItemMeta itemMeta = itemStack.getItemMeta();
+
+                // Set enchantments
+                List<String> enchantments = metaSection.getStringList("enchantments");
+                for (String enchantmentStr : enchantments) {
+                    String[] enchantmentParts = enchantmentStr.split(":");
+                    Enchantment enchantment = Enchantment.getByKey(NamespacedKey.minecraft(enchantmentParts[0]));
+                    if (enchantment != null) {
+                        int level = Integer.parseInt(enchantmentParts[1]);
+                        itemMeta.addEnchant(enchantment, level, true);
+                    }
+                }
+
+                // Set lore
+                List<String> lore = metaSection.getStringList("lore");
+                itemMeta.setLore(lore);
+
+                // Check if it's a potion
+                if (itemMeta instanceof PotionMeta) {
+                    PotionMeta potionMeta = (PotionMeta) itemMeta;
+
+                    // Set potion effects
+                    List<String> potionEffects = metaSection.getStringList("potionEffects");
+                    for (String potionEffectStr : potionEffects) {
+                        String[] effectParts = potionEffectStr.split(":");
+                        PotionEffectType effectType = PotionEffectType.getByName(effectParts[0]);
+                        if (effectType != null) {
+                            int duration = Integer.parseInt(effectParts[1]);
+                            int amplifier = Integer.parseInt(effectParts[2]);
+                            potionMeta.addCustomEffect(new PotionEffect(effectType, duration, amplifier), true);
+                        }
+                    }
+                }
+
+                itemStack.setItemMeta(itemMeta);
+            }
 
             items.add(itemStack);
         }
@@ -48,7 +99,8 @@ public class LootManager {
         return items;
     }
 
-    public static Inventory generateAirdropChestLoot(){
+
+    public static Inventory generateAirdropChestLoot(Plugin plugin){
 
         //getting the cfg
         ConfigManager configManager = ConfigManager.getInstance();
@@ -69,6 +121,18 @@ public class LootManager {
         List<ItemStack> legendaryItems = getItems(config, "settings.drops.legendary");
         int legendaryItemsAmount = config.getInt("settings.drops.legendary_items_amount");
         int legendaryItemsChance = config.getInt("settings.drops.legendary_items_chance");
+
+        List<ItemStack> godlyItems = new ArrayList<>();
+        Bomber bomber = new Bomber(plugin);
+        Chamoy chamoy = new Chamoy(plugin);
+        PenetrationBomber penetrationBomber = new PenetrationBomber(plugin);
+
+        godlyItems.add(bomber.getBombingCaller());
+        godlyItems.add(chamoy.getBombingCaller());
+        godlyItems.add(penetrationBomber.getBombingCaller());
+        int godlyItemsAmount = config.getInt("settings.drops.godly_items_amount");
+        int godlyItemsChance = config.getInt("settings.drops.godly_items_chance");
+
 
         //Creating the loot inventory
         Inventory loot = Bukkit.createInventory(null, InventoryType.CHEST, "Loot Chest");
@@ -105,13 +169,23 @@ public class LootManager {
             }
         }
 
-        //Choose Legendary legendary Items
+        //Choose legendary Items
         for (int i = 0; i < legendaryItemsAmount; i++) {
 
             if (ProbabilityUtils.getProbability(legendaryItemsChance)){
                 int randomItemIndex = ProbabilityUtils.getRandomInt(0, legendaryItems.size());
                 int randomSlot = ProbabilityUtils.getRandomInt(0, inventorySize);
                 loot.setItem(randomSlot, legendaryItems.get(randomItemIndex));
+            }
+        }
+
+        //Choose godly Items
+        for (int i = 0; i < godlyItemsAmount; i++) {
+
+            if (ProbabilityUtils.getProbability(godlyItemsChance)){
+                int randomItemIndex = ProbabilityUtils.getRandomInt(0, godlyItems.size());
+                int randomSlot = ProbabilityUtils.getRandomInt(0, inventorySize);
+                loot.setItem(randomSlot, godlyItems.get(randomItemIndex));
             }
         }
 
