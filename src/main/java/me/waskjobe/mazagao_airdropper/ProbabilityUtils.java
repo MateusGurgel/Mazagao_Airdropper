@@ -3,6 +3,8 @@ package me.waskjobe.mazagao_airdropper;
 import java.util.Random;
 
 public class ProbabilityUtils {
+    static Random random = new Random();
+
     public static int getRandomInt(int min, int max) {
         if (min > max) {
             int temp = min;
@@ -10,7 +12,7 @@ public class ProbabilityUtils {
             max = temp;
         }
 
-        Random random = new Random();
+
         return random.nextInt(max - min) + min;
     }
 
