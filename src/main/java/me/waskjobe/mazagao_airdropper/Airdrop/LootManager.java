@@ -1,6 +1,7 @@
 package me.waskjobe.mazagao_airdropper.Airdrop;
 
 import me.waskjobe.mazagao_airdropper.ConfigManager;
+import me.waskjobe.mazagao_airdropper.GodlyItems.AnvilBomber;
 import me.waskjobe.mazagao_airdropper.GodlyItems.Bomber;
 import me.waskjobe.mazagao_airdropper.GodlyItems.Chamoy;
 import me.waskjobe.mazagao_airdropper.GodlyItems.PenetrationBomber;
@@ -125,10 +126,12 @@ public class LootManager {
         Bomber bomber = new Bomber(plugin);
         Chamoy chamoy = new Chamoy(plugin);
         PenetrationBomber penetrationBomber = new PenetrationBomber(plugin);
+        AnvilBomber anvilBomber = new AnvilBomber(plugin);
 
         godlyItems.add(bomber.getBombingCaller());
         godlyItems.add(chamoy.getBombingCaller());
         godlyItems.add(penetrationBomber.getBombingCaller());
+        godlyItems.add(anvilBomber.getBombingCaller());
         int godlyItemsAmount = config.getInt("settings.drops.godly_items_amount");
         int godlyItemsChance = config.getInt("settings.drops.godly_items_chance");
 

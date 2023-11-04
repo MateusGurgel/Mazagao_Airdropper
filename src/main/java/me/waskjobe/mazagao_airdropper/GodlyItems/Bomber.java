@@ -64,8 +64,9 @@ public class Bomber implements Listener {
 
         World world = location.getWorld();
         Integer yOffset = 50;
-        Integer amountOfTnt = 400;
-        Integer range = 40;
+        Integer amountOfTnt = 600;
+        Integer range = 80;
+        Integer timesPerTick = 6;
 
         BukkitRunnable bombardmentTask = new BukkitRunnable() {
             private int count = 0;
@@ -79,23 +80,25 @@ public class Bomber implements Listener {
                     cancel();
                 }
 
-                int xRange = ProbabilityUtils.getRandomInt(-range,range);
-                int zRange = ProbabilityUtils.getRandomInt(-range,range);
+                for (int i = 0; i < timesPerTick; i++) {
+                    int xRange = ProbabilityUtils.getRandomInt(-range,range);
+                    int zRange = ProbabilityUtils.getRandomInt(-range,range);
 
-                Location tntLocation = location.clone();
-                Integer height = world.getHighestBlockYAt(tntLocation) + yOffset;
-                tntLocation.add(xRange, 0, zRange);
-                tntLocation.setY(height);
+                    Location tntLocation = location.clone();
+                    Integer height = world.getHighestBlockYAt(tntLocation) + yOffset;
+                    tntLocation.add(xRange, 0, zRange);
+                    tntLocation.setY(height);
 
-                TNTPrimed tnt = (TNTPrimed) world.spawnEntity(tntLocation,EntityType.PRIMED_TNT);
-                tnt.setFuseTicks(getRandomInt(20,37));
-                tnt.setGlowing(true);
-                tnt.setIsIncendiary(true);
-                tnt.setVelocity(new Vector(0,-2,0));
+                    TNTPrimed tnt = (TNTPrimed) world.spawnEntity(tntLocation,EntityType.PRIMED_TNT);
+                    tnt.setFuseTicks(getRandomInt(20,37));
+                    tnt.setGlowing(true);
+                    tnt.setIsIncendiary(true);
+                    tnt.setVelocity(new Vector(0,-2,0));
+                }
             }
         };
 
-        bombardmentTask.runTaskTimer(plugin, 0, 1);
+         bombardmentTask.runTaskTimer(plugin, 0, 1);
     }
 
     @EventHandler

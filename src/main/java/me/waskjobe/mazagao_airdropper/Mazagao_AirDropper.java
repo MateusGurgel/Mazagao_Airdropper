@@ -1,5 +1,6 @@
 package me.waskjobe.mazagao_airdropper;
 
+import me.waskjobe.mazagao_airdropper.GodlyItems.AnvilBomber;
 import me.waskjobe.mazagao_airdropper.GodlyItems.Chamoy;
 import me.waskjobe.mazagao_airdropper.GodlyItems.PenetrationBomber;
 import me.waskjobe.mazagao_airdropper.TaskScheduler.TaskSchedulerInterface;
@@ -36,10 +37,13 @@ public final class Mazagao_AirDropper extends JavaPlugin {
         Bomber bomberListener = new Bomber(this);
         Chamoy chamoyListener = new Chamoy(this);
         PenetrationBomber penetrationBomber = new PenetrationBomber(this);
+        AnvilBomber anvilBomber = new AnvilBomber(this);
 
         getServer().getPluginManager().registerEvents( penetrationBomber, this );
         getServer().getPluginManager().registerEvents( bomberListener, this );
         getServer().getPluginManager().registerEvents( chamoyListener, this );
+        getServer().getPluginManager().registerEvents( anvilBomber, this );
+
 
         //Scheduling Tasks
         System.out.println("Scheduling Tasks");
