@@ -1,22 +1,15 @@
 package me.waskjobe.mazagao_airdropper.GodlyItems;
 
-import me.waskjobe.mazagao_airdropper.ProbabilityUtils;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
-import org.bukkit.block.BlockFace;
-import org.bukkit.block.data.type.PointedDripstone;
 import org.bukkit.entity.*;
-import org.bukkit.entity.minecart.ExplosiveMinecart;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.util.Vector;
-
-import static me.waskjobe.mazagao_airdropper.ProbabilityUtils.getRandomInt;
 
 public class AnvilBomber extends Bomber implements Listener {
 
@@ -26,35 +19,40 @@ public class AnvilBomber extends Bomber implements Listener {
         setKey("AnvilCaller");
     }
 
-    public void applySlownessEffect(Location centerLocation, double radius, int size, int yOffset) {
+    public void placeAnvilRoof(Location centerLocation, double radius, int size, int yOffset) {
         World world = centerLocation.getWorld();
         double radiusSquared = radius * radius;
 
+        int height = world.getHighestBlockYAt(centerLocation) + yOffset;
+
         for (Entity entity : world.getEntities()) {
-            if (entity instanceof Player player) {
-                Location entityLocation = entity.getLocation();
-                if (centerLocation.distanceSquared(entityLocation) <= radiusSquared) {
 
-                    Integer height = world.getHighestBlockYAt(centerLocation) + yOffset;
+            if (!(entity instanceof Player player)) {
+                continue;
+            }
 
-                    for (int i = 0; i < size; i++) {
-                        for (int j = 0; j < size; j++) {
+            Location entityLocation = entity.getLocation();
+            if (centerLocation.distanceSquared(entityLocation) > radiusSquared){
+                continue;
+            }
 
-                            PotionEffect slownessEffect = new PotionEffect(PotionEffectType.SLOW, 200, 16, false);
-                            player.addPotionEffect(slownessEffect);
+            for (int i = 0; i < size; i++) {
+                for (int j = 0; j < size; j++) {
 
-                            Location anvilLocation = entityLocation.clone();
-                            anvilLocation.add(i - (int) ((double) size /2), 0, j - (int) ((double) size /2));
-                            anvilLocation.setY(height);
+                    PotionEffect slownessEffect = new PotionEffect(PotionEffectType.SLOW, 200, 16, false);
+                    player.addPotionEffect(slownessEffect);
 
-                            Block anvil = anvilLocation.getBlock();
-                            anvil.setType(Material.DAMAGED_ANVIL);
-                        }
+                    Location anvilLocation = entityLocation.clone();
 
-                    }
+                    int halfSize = size / 2;
+                    anvilLocation.add(i - halfSize, 0, j - halfSize);
 
+                    anvilLocation.setY(height);
 
+                    Block anvil = anvilLocation.getBlock();
+                    anvil.setType(Material.DAMAGED_ANVIL);
                 }
+
             }
         }
     }
@@ -78,7 +76,7 @@ public class AnvilBomber extends Bomber implements Listener {
                     cancel();
                 }
 
-                applySlownessEffect(location, range, 21, yOffset);
+                placeAnvilRoof(location, range, 21, yOffset);
             }
         };
 
