@@ -24,14 +24,18 @@ public class Chamoy extends Bomber implements Listener {
         double radiusSquared = radius * radius;
 
         for (Entity entity : world.getEntities()) {
-            if (entity instanceof LivingEntity) {
-                Location entityLocation = entity.getLocation();
-                if (centerLocation.distanceSquared(entityLocation) <= radiusSquared) {
-                    LivingEntity livingEntity = (LivingEntity) entity;
-                    PotionEffect slownessEffect = new PotionEffect(PotionEffectType.SLOW, 600, 3, false);
-                    livingEntity.addPotionEffect(slownessEffect);
-                }
+
+            if (!(entity instanceof LivingEntity livingEntity)) {
+                continue;
             }
+
+            Location entityLocation = entity.getLocation();
+            if (centerLocation.distanceSquared(entityLocation) > radiusSquared) {
+                return;
+            }
+
+            PotionEffect slownessEffect = new PotionEffect(PotionEffectType.SLOW, 600, 3, false);
+            livingEntity.addPotionEffect(slownessEffect);
         }
     }
 
@@ -39,15 +43,16 @@ public class Chamoy extends Bomber implements Listener {
      void bombardment(Location location) {
 
         World world = location.getWorld();
-        Integer loops = 30;
-        Integer amountOfTntPerLoop = 3;
-        Integer effectRange = 40;
 
-        applySlownessEffect(location, effectRange);
+        int loops = 30;
+        int amountOfTntPerLoop = 3;
+        int slownessEffectRange = 40;
+
+        applySlownessEffect(location, slownessEffectRange);
 
         BukkitRunnable bombardmentTask = new BukkitRunnable() {
-            private Location superiorEpicenter = location.clone();
-            private Location inferiorEpicenter = location.clone();
+            private final Location superiorEpicenter = location.clone();
+            private final Location inferiorEpicenter = location.clone();
             private int count = 0;
 
             @Override
@@ -60,11 +65,8 @@ public class Chamoy extends Bomber implements Listener {
                 }
 
                 for (double angle = 0; angle < 360; angle += 40) {
-
                     double radians =  Math.toRadians(angle + ((count % 2) * 45));
-
                     Vector direction = new Vector(Math.cos(radians), 0, Math.sin(radians));
-
 
                     TNTPrimed tnt = (TNTPrimed) world.spawnEntity(superiorEpicenter, EntityType.PRIMED_TNT);
                     tnt.setVelocity(direction);
@@ -83,8 +85,6 @@ public class Chamoy extends Bomber implements Listener {
         };
 
         bombardmentTask.runTaskTimer(plugin, 2, 0);
-
-
     }
 
 
