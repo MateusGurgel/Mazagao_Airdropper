@@ -24,6 +24,12 @@ public class Bomber implements Listener {
     private NamespacedKey key;
     private String itemName;
 
+    public Bomber(Plugin plugin){
+        this.plugin = plugin;
+
+        setItemName("Bombing Caller");
+        setKey("BombingCaller");
+    }
 
     NamespacedKey getKey(){
         return key;
@@ -36,13 +42,6 @@ public class Bomber implements Listener {
     }
     void setItemName(String itemName){
         this.itemName = itemName;
-    }
-
-    public Bomber(Plugin plugin){
-        this.plugin = plugin;
-
-        setItemName("Bombing Caller");
-        setKey("BombingCaller");
     }
 
     public ItemStack getBombingCaller() {
@@ -63,10 +62,11 @@ public class Bomber implements Listener {
      void bombardment(Location location) {
 
         World world = location.getWorld();
-        Integer yOffset = 50;
-        Integer amountOfTnt = 600;
-        Integer range = 80;
-        Integer timesPerTick = 6;
+
+        int range = 80;
+        int yOffset = 50;
+        int timesPerTick = 6;
+        int amountOfTnt = 600;
 
         BukkitRunnable bombardmentTask = new BukkitRunnable() {
             private int count = 0;
@@ -80,12 +80,13 @@ public class Bomber implements Listener {
                     cancel();
                 }
 
+                int height = world.getHighestBlockYAt(location) + yOffset;
+
                 for (int i = 0; i < timesPerTick; i++) {
                     int xRange = ProbabilityUtils.getRandomInt(-range,range);
                     int zRange = ProbabilityUtils.getRandomInt(-range,range);
 
                     Location tntLocation = location.clone();
-                    Integer height = world.getHighestBlockYAt(tntLocation) + yOffset;
                     tntLocation.add(xRange, 0, zRange);
                     tntLocation.setY(height);
 
