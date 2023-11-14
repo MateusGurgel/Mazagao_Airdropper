@@ -4,23 +4,13 @@ import me.waskjobe.mazagao_airdropper.ConfigManager;
 import me.waskjobe.mazagao_airdropper.ProbabilityUtils;
 import me.waskjobe.mazagao_airdropper.bombers.factory.BomberFactory;
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
-import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.enchantments.Enchantment;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.plugin.Plugin;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 public class LootManager {
 
