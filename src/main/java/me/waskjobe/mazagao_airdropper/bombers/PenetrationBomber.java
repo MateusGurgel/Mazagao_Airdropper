@@ -1,4 +1,4 @@
-package me.waskjobe.mazagao_airdropper.GodlyItems;
+package me.waskjobe.mazagao_airdropper.bombers;
 
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -6,7 +6,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
-public class PenetrationBomber extends Bomber implements Listener {
+public class PenetrationBomber extends Bomber {
 
     public PenetrationBomber(Plugin plugin) {
         super(plugin);
@@ -34,8 +34,6 @@ public class PenetrationBomber extends Bomber implements Listener {
 
                 world.createExplosion(location, 10);
                 location.add(0,-1.3,0);
-
-
             }
         };
 

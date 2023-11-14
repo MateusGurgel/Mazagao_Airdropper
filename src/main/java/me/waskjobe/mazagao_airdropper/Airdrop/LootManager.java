@@ -1,11 +1,8 @@
 package me.waskjobe.mazagao_airdropper.Airdrop;
 
 import me.waskjobe.mazagao_airdropper.ConfigManager;
-import me.waskjobe.mazagao_airdropper.GodlyItems.AnvilBomber;
-import me.waskjobe.mazagao_airdropper.GodlyItems.Bomber;
-import me.waskjobe.mazagao_airdropper.GodlyItems.Chamoy;
-import me.waskjobe.mazagao_airdropper.GodlyItems.PenetrationBomber;
 import me.waskjobe.mazagao_airdropper.ProbabilityUtils;
+import me.waskjobe.mazagao_airdropper.bombers.factory.BomberFactory;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -26,7 +23,15 @@ import java.util.List;
 import java.util.Set;
 
 public class LootManager {
-    private static List<ItemStack> getItems(FileConfiguration config, String sectionPath) throws IllegalArgumentException {
+
+    private final BomberFactory bomberFactory;
+
+    public LootManager(Plugin plugin) {
+        this.bomberFactory = new BomberFactory(plugin);
+    }
+
+    //TODO take this and place somewhere else
+    private List<ItemStack> getItems(FileConfiguration config, String sectionPath) throws IllegalArgumentException {
         List<ItemStack> items = new ArrayList<>();
 
         ConfigurationSection section = config.getConfigurationSection(sectionPath);
@@ -99,8 +104,19 @@ public class LootManager {
         return items;
     }
 
+    //TODO make that shorter
+    public void chooseRandomItems(Inventory loot, int commonItemsAmount, int commonItemsChance, int inventorySize, List<ItemStack> commonItems) {
+        for (int i = 0; i < commonItemsAmount; i++) {
+            if (ProbabilityUtils.getProbability(commonItemsChance)) {
+                int randomItemIndex = ProbabilityUtils.getRandomInt(0, commonItems.size());
+                int randomSlot = ProbabilityUtils.getRandomInt(0, inventorySize);
+                loot.setItem(randomSlot, commonItems.get(randomItemIndex));
+            }
+        }
+    }
 
-    public static Inventory generateAirdropChestLoot(Plugin plugin){
+
+    public Inventory generateAirdropChestLoot(){
 
         //getting the cfg
         ConfigManager configManager = ConfigManager.getInstance();
@@ -122,72 +138,27 @@ public class LootManager {
         int legendaryItemsAmount = config.getInt("settings.drops.legendary_items_amount");
         int legendaryItemsChance = config.getInt("settings.drops.legendary_items_chance");
 
-        List<ItemStack> godlyItems = new ArrayList<>();
-        Bomber bomber = new Bomber(plugin);
-        Chamoy chamoy = new Chamoy(plugin);
-        PenetrationBomber penetrationBomber = new PenetrationBomber(plugin);
-        AnvilBomber anvilBomber = new AnvilBomber(plugin);
-
-        godlyItems.add(bomber.getBombingCaller());
-        godlyItems.add(chamoy.getBombingCaller());
-        godlyItems.add(penetrationBomber.getBombingCaller());
-        godlyItems.add(anvilBomber.getBombingCaller());
         int godlyItemsAmount = config.getInt("settings.drops.godly_items_amount");
         int godlyItemsChance = config.getInt("settings.drops.godly_items_chance");
-
 
         //Creating the loot inventory
         Inventory loot = Bukkit.createInventory(null, InventoryType.CHEST, "Loot Chest");
 
         int inventorySize = loot.getSize();
 
-        //Choose Random Common Items
-        for (int i = 0; i < commonItemsAmount; i++) {
+        chooseRandomItems(loot, commonItemsAmount, commonItemsChance, inventorySize, commonItems);
+        chooseRandomItems(loot, rareItemsAmount, rareItemsChance, inventorySize, rareItems);
+        chooseRandomItems(loot, epicItemsAmount, epicItemsChance, inventorySize, epicItems);
+        chooseRandomItems(loot, legendaryItemsAmount, legendaryItemsChance, inventorySize, legendaryItems);
+        chooseRandomItems(loot, godlyItemsAmount, godlyItemsChance, inventorySize, bomberFactory.getAllBombers());
 
-            if (ProbabilityUtils.getProbability(commonItemsChance)){
-                int randomItemIndex = ProbabilityUtils.getRandomInt(0, commonItems.size());
-                int randomSlot = ProbabilityUtils.getRandomInt(0, inventorySize);
-                loot.setItem(randomSlot, commonItems.get(randomItemIndex));
-            }
-        }
-
-        //Choose Random rare Items
-        for (int i = 0; i < rareItemsAmount; i++) {
-
-            if (ProbabilityUtils.getProbability(rareItemsChance)){
-                int randomItemIndex = ProbabilityUtils.getRandomInt(0, rareItems.size());
-                int randomSlot = ProbabilityUtils.getRandomInt(0, inventorySize);
-                loot.setItem(randomSlot, rareItems.get(randomItemIndex));
-            }
-        }
-
-        //Choose Random Epic Items
-        for (int i = 0; i < epicItemsAmount; i++) {
-
-            if (ProbabilityUtils.getProbability(epicItemsChance)){
-                int randomItemIndex = ProbabilityUtils.getRandomInt(0, epicItems.size());
-                int randomSlot = ProbabilityUtils.getRandomInt(0, inventorySize);
-                loot.setItem(randomSlot, epicItems.get(randomItemIndex));
-            }
-        }
-
-        //Choose legendary Items
-        for (int i = 0; i < legendaryItemsAmount; i++) {
-
-            if (ProbabilityUtils.getProbability(legendaryItemsChance)){
-                int randomItemIndex = ProbabilityUtils.getRandomInt(0, legendaryItems.size());
-                int randomSlot = ProbabilityUtils.getRandomInt(0, inventorySize);
-                loot.setItem(randomSlot, legendaryItems.get(randomItemIndex));
-            }
-        }
 
         //Choose godly Items
         for (int i = 0; i < godlyItemsAmount; i++) {
 
             if (ProbabilityUtils.getProbability(godlyItemsChance)){
-                int randomItemIndex = ProbabilityUtils.getRandomInt(0, godlyItems.size());
                 int randomSlot = ProbabilityUtils.getRandomInt(0, inventorySize);
-                loot.setItem(randomSlot, godlyItems.get(randomItemIndex));
+                loot.setItem(randomSlot, bomberFactory.getRandomBomber());
             }
         }
 

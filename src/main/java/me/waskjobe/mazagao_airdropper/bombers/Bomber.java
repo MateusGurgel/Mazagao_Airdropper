@@ -1,4 +1,4 @@
-package me.waskjobe.mazagao_airdropper.GodlyItems;
+package me.waskjobe.mazagao_airdropper.bombers;
 
 import me.waskjobe.mazagao_airdropper.ProbabilityUtils;
 import org.bukkit.*;
@@ -37,6 +37,7 @@ public class Bomber implements Listener {
     void setKey(String keyName){
         this.key = new NamespacedKey(plugin, keyName);
     }
+
     String getItemName(){
         return this.itemName;
     }
@@ -76,8 +77,9 @@ public class Bomber implements Listener {
 
                 count++;
 
-                if (count >= amountOfTnt) {
+                if (count >= amountOfTnt || world == null) {
                     cancel();
+                    return;
                 }
 
                 int height = world.getHighestBlockYAt(location) + yOffset;

@@ -1,5 +1,5 @@
 settings:
-  min_amount_of_players: 3
+  min_amount_of_players: 1
   airdrop_chance: 75
   airdrop_message: "Um Airdrop Caiu na localização"
   airdrop_period: 72000
@@ -8,16 +8,16 @@ settings:
     x: 0
     z: 0
   drops:
-    common_items_amount: 15
-    common_items_chance: 95
+    common_items_amount: 13
+    common_items_chance: 80
     rare_items_amount: 8
     rare_items_chance: 50
-    epic_items_amount: 2
-    epic_items_chance: 10
+    epic_items_amount: 4
+    epic_items_chance: 18
     legendary_items_amount: 1
-    legendary_items_chance: 100
+    legendary_items_chance: 45
     godly_items_amount: 1
-    godly_items_chance: 100
+    godly_items_chance: 35
     common:
       item1:
         material: OAK_WOOD
@@ -106,31 +106,28 @@ settings:
       item29:
         material: REDSTONE_BLOCK
         amount: 16
-      item30:
-        material: REPEATER
-        amount: 32
-      item31:
-        material: SCULK_SENSOR
-        amount: 8
       item32:
         material: ANVIL
         amount: 1
       item33:
         material: FROSTED_ICE
         amount: 64
+      item34:
+        material: CROSSBOW
+        amount: 1
+      item35:
+        material: DIAMOND
+        amount: 2
     rare:
       item1:
         material: OBSIDIAN
         amount: 45
-      item2:
-        material: CROSSBOW
-        amount: 1
       item3:
         material: EXPERIENCE_BOTTLE
-        amount: 38
+        amount: 64
       item4:
         material: DIAMOND
-        amount: 7
+        amount: 9
       item5:
         material: DIAMOND_SWORD
         amount: 1
@@ -166,17 +163,23 @@ settings:
         amount: 8
       item16:
         material: NETHERITE_SCRAP
-        amount: 5
+        amount: 1
       item17:
         material: ENCHANTING_TABLE
         amount: 1
+      item18:
+        material: REPEATER
+        amount: 32
+      item19:
+        material: SCULK_SENSOR
+        amount: 8
     epic:
       item1:
         material: TOTEM_OF_UNDYING
         amount: 1
       item2:
         material: DIAMOND_BLOCK
-        amount: 2
+        amount: 3
       item4:
         material: REDSTONE_BLOCK
         amount: 4
@@ -188,13 +191,13 @@ settings:
         amount: 1
       item7:
         material: ENDER_PEARL
-        amount: 6
+        amount: 16
       item8:
         material: ENDER_EYE
-        amount: 3
+        amount: 8
       item9:
         material: EXPERIENCE_BOTTLE
-        amount: 75
+        amount: 128
       item10:
         material: BEACON
         amount: 1

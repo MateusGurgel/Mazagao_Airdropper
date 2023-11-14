@@ -1,4 +1,4 @@
-package me.waskjobe.mazagao_airdropper.GodlyItems;
+package me.waskjobe.mazagao_airdropper.bombers;
 
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -11,7 +11,7 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
-public class AnvilBomber extends Bomber implements Listener {
+public class AnvilBomber extends Bomber {
 
     public AnvilBomber(Plugin plugin) {
         super(plugin);

@@ -7,14 +7,12 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.io.File;
 import java.io.IOException;
 
+//TODO refactor that >:(
+
 public class ConfigManager {
     private static ConfigManager instance;
     private File configFile;
     private FileConfiguration config;
-
-    private ConfigManager() {
-        instance = this;
-    }
 
     public static ConfigManager getInstance() {
         if (instance == null) {

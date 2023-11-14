@@ -11,9 +11,15 @@ import org.bukkit.plugin.Plugin;
 
 public class Airdrop {
 
+    private final LootManager lootManager;
+
+    public Airdrop(Plugin plugin) {
+        this.lootManager = new LootManager(plugin);
+    }
+
     private static final FileConfiguration config = ConfigManager.getInstance().getConfig();
 
-    private static Location generateAirDropLocation(World world){
+    private Location generateAirDropLocation(World world){
         Location location = new Location(world, 0, 0, 0);
 
         int airdropRange = config.getInt("settings.airdrop_range");
@@ -34,7 +40,7 @@ public class Airdrop {
         return location;
     }
 
-    public static void task(World world, Plugin plugin){
+    public void task(World world){
         int airdropChance = config.getInt("settings.airdrop_chance");
         int minAmountOfPlayers = config.getInt("settings.min_amount_of_players");
         int connectedPlayers = Bukkit.getOnlinePlayers().size();
@@ -43,10 +49,10 @@ public class Airdrop {
             return;
         }
 
-        call(world, plugin);
+        call(world);
     }
 
-    public static void call(World world, Plugin plugin){
+    public void call(World world){
 
         //Get Location
         Location location = generateAirDropLocation(world);
@@ -64,7 +70,7 @@ public class Airdrop {
         Inventory ChestInventory = chest.getInventory();
 
         //place the loot on the Chest
-        Inventory loot = LootManager.generateAirdropChestLoot(plugin);
+        Inventory loot = lootManager.generateAirdropChestLoot();
         ChestInventory.setContents(loot.getContents());
 
         //Send Message

@@ -1,4 +1,4 @@
-package me.waskjobe.mazagao_airdropper.GodlyItems;
+package me.waskjobe.mazagao_airdropper.bombers;
 
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -11,7 +11,7 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
-public class Chamoy extends Bomber implements Listener {
+public class Chamoy extends Bomber {
 
     public Chamoy(Plugin plugin) {
         super(plugin);
