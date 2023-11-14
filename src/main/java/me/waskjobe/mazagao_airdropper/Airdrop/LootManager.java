@@ -30,91 +30,18 @@ public class LootManager {
         this.bomberFactory = new BomberFactory(plugin);
     }
 
-    //TODO take this and place somewhere else
-    private List<ItemStack> getItems(FileConfiguration config, String sectionPath) throws IllegalArgumentException {
-        List<ItemStack> items = new ArrayList<>();
+    public void chooseRandomItems(Inventory loot, int ItemsAmount, int itemsChance, List<ItemStack> items) {
 
-        ConfigurationSection section = config.getConfigurationSection(sectionPath);
-        Set<String> keys = section.getKeys(false);
+        int inventorySize = loot.getSize();
 
-        for (String key : keys) {
-            String itemPath = sectionPath + "." + key;
-
-            if (!config.isConfigurationSection(itemPath)) {
-                continue;
-            }
-
-            String materialName = config.getString(itemPath + ".material");
-            int amount = config.getInt(itemPath + ".amount");
-
-            if (materialName == null) {
-                throw new IllegalArgumentException("Missing 'material' value for item: " + key);
-            }
-
-            // Create the ItemStack using the material name and amount
-            Material material = Material.matchMaterial(materialName);
-            if (material == null) {
-                throw new IllegalArgumentException("Invalid material: " + materialName);
-            }
-            ItemStack itemStack = new ItemStack(material, amount);
-
-            // Set item metadata (e.g., enchantments, lore, potion effects)
-            ConfigurationSection metaSection = config.getConfigurationSection(itemPath + ".meta");
-            if (metaSection != null) {
-                ItemMeta itemMeta = itemStack.getItemMeta();
-
-                // Set enchantments
-                List<String> enchantments = metaSection.getStringList("enchantments");
-                for (String enchantmentStr : enchantments) {
-                    String[] enchantmentParts = enchantmentStr.split(":");
-                    Enchantment enchantment = Enchantment.getByKey(NamespacedKey.minecraft(enchantmentParts[0]));
-                    if (enchantment != null) {
-                        int level = Integer.parseInt(enchantmentParts[1]);
-                        itemMeta.addEnchant(enchantment, level, true);
-                    }
-                }
-
-                // Set lore
-                List<String> lore = metaSection.getStringList("lore");
-                itemMeta.setLore(lore);
-
-                // Check if it's a potion
-                if (itemMeta instanceof PotionMeta) {
-                    PotionMeta potionMeta = (PotionMeta) itemMeta;
-
-                    // Set potion effects
-                    List<String> potionEffects = metaSection.getStringList("potionEffects");
-                    for (String potionEffectStr : potionEffects) {
-                        String[] effectParts = potionEffectStr.split(":");
-                        PotionEffectType effectType = PotionEffectType.getByName(effectParts[0]);
-                        if (effectType != null) {
-                            int duration = Integer.parseInt(effectParts[1]);
-                            int amplifier = Integer.parseInt(effectParts[2]);
-                            potionMeta.addCustomEffect(new PotionEffect(effectType, duration, amplifier), true);
-                        }
-                    }
-                }
-
-                itemStack.setItemMeta(itemMeta);
-            }
-
-            items.add(itemStack);
-        }
-
-        return items;
-    }
-
-    //TODO make that shorter
-    public void chooseRandomItems(Inventory loot, int commonItemsAmount, int commonItemsChance, int inventorySize, List<ItemStack> commonItems) {
-        for (int i = 0; i < commonItemsAmount; i++) {
-            if (ProbabilityUtils.getProbability(commonItemsChance)) {
-                int randomItemIndex = ProbabilityUtils.getRandomInt(0, commonItems.size());
+        for (int i = 0; i < ItemsAmount; i++) {
+            if (ProbabilityUtils.getProbability(itemsChance)) {
+                int randomItemIndex = ProbabilityUtils.getRandomInt(0, items.size());
                 int randomSlot = ProbabilityUtils.getRandomInt(0, inventorySize);
-                loot.setItem(randomSlot, commonItems.get(randomItemIndex));
+                loot.setItem(randomSlot, items.get(randomItemIndex));
             }
         }
     }
-
 
     public Inventory generateAirdropChestLoot(){
 
@@ -122,19 +49,19 @@ public class LootManager {
         ConfigManager configManager = ConfigManager.getInstance();
         FileConfiguration config = configManager.getConfig();
 
-        List<ItemStack> commonItems = getItems(config, "settings.drops.common");
+        List<ItemStack> commonItems = configManager.getItems(config, "settings.drops.common");
         int commonItemsAmount = config.getInt("settings.drops.common_items_amount");
         int commonItemsChance = config.getInt("settings.drops.common_items_chance");
 
-        List<ItemStack> rareItems = getItems(config, "settings.drops.rare");
+        List<ItemStack> rareItems = configManager.getItems(config, "settings.drops.rare");
         int rareItemsAmount = config.getInt("settings.drops.rare_items_amount");
         int rareItemsChance = config.getInt("settings.drops.rare_items_chance");
 
-        List<ItemStack> epicItems = getItems(config, "settings.drops.epic");
+        List<ItemStack> epicItems = configManager.getItems(config, "settings.drops.epic");
         int epicItemsAmount = config.getInt("settings.drops.epic_items_amount");
         int epicItemsChance = config.getInt("settings.drops.epic_items_chance");
 
-        List<ItemStack> legendaryItems = getItems(config, "settings.drops.legendary");
+        List<ItemStack> legendaryItems = configManager.getItems(config, "settings.drops.legendary");
         int legendaryItemsAmount = config.getInt("settings.drops.legendary_items_amount");
         int legendaryItemsChance = config.getInt("settings.drops.legendary_items_chance");
 
@@ -144,23 +71,11 @@ public class LootManager {
         //Creating the loot inventory
         Inventory loot = Bukkit.createInventory(null, InventoryType.CHEST, "Loot Chest");
 
-        int inventorySize = loot.getSize();
-
-        chooseRandomItems(loot, commonItemsAmount, commonItemsChance, inventorySize, commonItems);
-        chooseRandomItems(loot, rareItemsAmount, rareItemsChance, inventorySize, rareItems);
-        chooseRandomItems(loot, epicItemsAmount, epicItemsChance, inventorySize, epicItems);
-        chooseRandomItems(loot, legendaryItemsAmount, legendaryItemsChance, inventorySize, legendaryItems);
-        chooseRandomItems(loot, godlyItemsAmount, godlyItemsChance, inventorySize, bomberFactory.getAllBombers());
-
-
-        //Choose godly Items
-        for (int i = 0; i < godlyItemsAmount; i++) {
-
-            if (ProbabilityUtils.getProbability(godlyItemsChance)){
-                int randomSlot = ProbabilityUtils.getRandomInt(0, inventorySize);
-                loot.setItem(randomSlot, bomberFactory.getRandomBomber());
-            }
-        }
+        chooseRandomItems(loot, commonItemsAmount, commonItemsChance, commonItems);
+        chooseRandomItems(loot, rareItemsAmount, rareItemsChance, rareItems);
+        chooseRandomItems(loot, epicItemsAmount, epicItemsChance, epicItems);
+        chooseRandomItems(loot, legendaryItemsAmount, legendaryItemsChance, legendaryItems);
+        chooseRandomItems(loot, godlyItemsAmount, godlyItemsChance, bomberFactory.getAllBombers());
 
         return loot;
     }
