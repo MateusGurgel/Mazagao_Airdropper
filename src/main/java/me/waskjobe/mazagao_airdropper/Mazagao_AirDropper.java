@@ -1,12 +1,9 @@
 package me.waskjobe.mazagao_airdropper;
 
-import me.waskjobe.mazagao_airdropper.bombers.AnvilBomber;
-import me.waskjobe.mazagao_airdropper.bombers.Chamoy;
-import me.waskjobe.mazagao_airdropper.bombers.PenetrationBomber;
 import me.waskjobe.mazagao_airdropper.TaskScheduler.TaskSchedulerInterface;
 import me.waskjobe.mazagao_airdropper.TaskScheduler.TaskScheduler;
-import me.waskjobe.mazagao_airdropper.bombers.Bomber;
 import me.waskjobe.mazagao_airdropper.bombers.factory.BomberFactory;
+import me.waskjobe.mazagao_airdropper.config.ConfigManager;
 import org.bukkit.configuration.file.FileConfiguration;
 import me.waskjobe.mazagao_airdropper.Airdrop.Airdrop;
 import org.bukkit.plugin.java.JavaPlugin;

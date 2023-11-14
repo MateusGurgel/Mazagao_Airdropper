@@ -1,6 +1,6 @@
 package me.waskjobe.mazagao_airdropper.Airdrop;
 
-import me.waskjobe.mazagao_airdropper.ConfigManager;
+import me.waskjobe.mazagao_airdropper.config.ConfigManager;
 import me.waskjobe.mazagao_airdropper.ProbabilityUtils;
 import me.waskjobe.mazagao_airdropper.bombers.factory.BomberFactory;
 import org.bukkit.Bukkit;
@@ -39,19 +39,19 @@ public class LootManager {
         ConfigManager configManager = ConfigManager.getInstance();
         FileConfiguration config = configManager.getConfig();
 
-        List<ItemStack> commonItems = configManager.getItems(config, "settings.drops.common");
+        List<ItemStack> commonItems = configManager.loadItems("settings.drops.common");
         int commonItemsAmount = config.getInt("settings.drops.common_items_amount");
         int commonItemsChance = config.getInt("settings.drops.common_items_chance");
 
-        List<ItemStack> rareItems = configManager.getItems(config, "settings.drops.rare");
+        List<ItemStack> rareItems = configManager.loadItems("settings.drops.rare");
         int rareItemsAmount = config.getInt("settings.drops.rare_items_amount");
         int rareItemsChance = config.getInt("settings.drops.rare_items_chance");
 
-        List<ItemStack> epicItems = configManager.getItems(config, "settings.drops.epic");
+        List<ItemStack> epicItems = configManager.loadItems("settings.drops.epic");
         int epicItemsAmount = config.getInt("settings.drops.epic_items_amount");
         int epicItemsChance = config.getInt("settings.drops.epic_items_chance");
 
-        List<ItemStack> legendaryItems = configManager.getItems(config, "settings.drops.legendary");
+        List<ItemStack> legendaryItems = configManager.loadItems("settings.drops.legendary");
         int legendaryItemsAmount = config.getInt("settings.drops.legendary_items_amount");
         int legendaryItemsChance = config.getInt("settings.drops.legendary_items_chance");
 

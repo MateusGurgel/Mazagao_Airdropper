@@ -1,5 +1,5 @@
 package me.waskjobe.mazagao_airdropper.Airdrop;
-import me.waskjobe.mazagao_airdropper.ConfigManager;
+import me.waskjobe.mazagao_airdropper.config.ConfigManager;
 import me.waskjobe.mazagao_airdropper.ProbabilityUtils;
 import org.bukkit.*;
 import org.bukkit.block.Block;
